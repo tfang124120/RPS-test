@@ -7,19 +7,19 @@ let playerScore = 0;
 let computerScore = 0;
 let roundNum = 0;
 
-function roundCount(){
+function roundCount(){  //counts the rounds that pass including ties
     roundNum++;
     rounds.innerText = `Round: ${roundNum}`;
     return roundNum;
 }
 
-function getComputerChoice(){
+function getComputerChoice(){   //selects a random choice
     const choices = ["Rock", "Paper", "Scissors"];
     const computerSelection = choices[Math.floor(Math.random()*3)];
     return computerSelection;
 }
 
-function playRound(playerSelection, computerSelection){
+function playRound(playerSelection, computerSelection){ //RPS logic
     switch(true){
         case (playerSelection === computerSelection):
             descText.innerText = `Both sides played ${playerSelection}! It's a tie!`;
@@ -36,19 +36,19 @@ function playRound(playerSelection, computerSelection){
             break;
     }
 
-    const points = document.querySelector('.points');
-    points.innerText = `Player: ${playerScore} | Computer: ${computerScore}`;
+    const points = document.querySelector('.points');   
+    points.innerText = `Player: ${playerScore} | Computer: ${computerScore}`; //updates the scores
     return [playerScore, computerScore];
 }
 
 function endGame(playerPoints, computerPoints){
-    if (playerPoints === 5 || computerPoints === 5){
+    if (playerPoints === 5 || computerPoints === 5){    //when someone gets 5 points end the game
         buttons.forEach((button)=>{
-            button.setAttribute('disabled', '');
+            button.setAttribute('disabled', '');    //disable buttons during process
             button.classList.add('disabled-button', 'opacity');
         });
 
-        const gameOverTxt = document.querySelector('.game-over-txt');
+        const gameOverTxt = document.querySelector('.game-over-txt');   //display gameover txt
         if(playerScore > computerScore){
             descText.innerText = 'Player wins!';
             gameOverTxt.textContent = 'You won!';
@@ -63,13 +63,13 @@ function endGame(playerPoints, computerPoints){
 
 function reset(){
     buttonPlayAgain.addEventListener('click',()=> {
-        window.location.reload;
+        window.location.reload();   //reloads window
     });
 }
 
 function game(){
-    let playerSelection;
-    buttons.forEach((choice)=>{
+    let playerSelection;    //get player input
+    buttons.forEach((choice)=>{ //checks which button player clicks
         choice.addEventListener('click',() => {
             if(choice.classList.contains('rock-btn')){
                 playerSelection = 'Rock';
@@ -80,10 +80,10 @@ function game(){
             else{
                 playerSelection = 'Scissors';
             }
-            roundCount();
-            playRound(playerSelection, getComputerChoice());
-            endGame(playerScore, computerScore);
-            reset();
+            roundCount();   //counts the round
+            playRound(playerSelection, getComputerChoice()); //starts the game
+            endGame(playerScore, computerScore);    //ends game if player/comp gets 5
+            reset();    //refreshes window
         });
     });
 }
